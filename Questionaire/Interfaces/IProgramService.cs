@@ -9,5 +9,7 @@ namespace Questionaire.Interfaces
         Task<BaseResponse> EditQuestion(Guid programId, QuestionDTO questionDTO);
 
         Task<BaseResponse> GetQuestionTypes();
+        Task<BaseResponse> GetAllPrograms();
+        
     }
 }

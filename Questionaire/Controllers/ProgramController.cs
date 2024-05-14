@@ -59,5 +59,16 @@ namespace Questionaire.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("GetAllPrograms")]
+        [ProducesResponseType(typeof(BaseResponse), 200)]
+        [ProducesResponseType(typeof(BaseResponse), 500)]
+        [ProducesResponseType(typeof(FieldValidator), 400)]
+        public async Task<IActionResult> GetAllPrograms()
+        {
+            var response = await _programService.GetAllPrograms();
+
+            return Ok(response);
+        }
     }
 }

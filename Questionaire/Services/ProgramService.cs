@@ -90,6 +90,18 @@ namespace Questionaire.Services
 
             return new BaseResponse(true, data);
         }
+
+        public async Task<BaseResponse> GetAllPrograms(){
+            try
+            {
+                var data = await _context.Programs.ToListAsync();
+                return new BaseResponse(true, data);
+            }
+            catch(Exception ex)
+            {
+                return new BaseResponse(false, ex.Message);
+            }
+        }
     }
 
 }
