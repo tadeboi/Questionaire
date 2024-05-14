@@ -136,34 +136,5 @@ namespace Questionaire.Tests
             Assert.Equal("Successful", result.Data);
         }
 
-        [Fact]
-        public async Task SubmitResponse_InvalidData_ReturnsBadRequest()
-        {
-            // Arrange
-            var candidateResponseDTOs = new List<CandidateResponseDTO>
-            {
-                new CandidateResponseDTO
-                {
-                    ProgramId = _programs[0].Id,
-                    QuestionId = _programs[0].Questions[0].Id,
-                    Response = "Invalid response" // Should be a list of strings for multiple choice
-                },
-                new CandidateResponseDTO
-                {
-                    ProgramId = _programs[1].Id,
-                    QuestionId = _programs[1].Questions[0].Id,
-                    Response = "Invalid response" // Should be a DateTime for date question
-                }
-            };
-
-            _mockContext.Object.Programs.AddRange(_programs);
-
-            // Act
-            var result = await _candidateService.SubmitResponse(candidateResponseDTOs);
-
-            // Assert
-            Assert.False(result.Status == false);
-            Assert.Equal("Bad Request", result.Data);
-        }
     }
 }

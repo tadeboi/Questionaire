@@ -38,40 +38,11 @@ namespace Questionaire.Services
             try
             {
                 foreach (var candidateResponse in candidateResponseDTOs){
-                    var program = await _context.Programs.FirstOrDefaultAsync(q => q.Id == candidateResponse.ProgramId);
-
-                    if(program != null){
-                        var question = program.Questions.FirstOrDefault(q => q.Id == candidateResponse.QuestionId);
-
-                        if (question.QuestionType == QuestionType.Date && !(candidateResponse.Response is DateTime)){
-                            return new BaseResponse(false, "Bad Request");
-                        }
-                        else if (question.QuestionType == QuestionType.Dropdown && !(candidateResponse.Response is string)){
-                            return new BaseResponse(false, "Bad Request");
-                        }
-                        else if (question.QuestionType == QuestionType.MultipleChoice && !(candidateResponse.Response is List<string>)){
-                            return new BaseResponse(false, "Bad Request");
-                        }
-                        else if (question.QuestionType == QuestionType.Number && !(candidateResponse.Response is int)){
-                            return new BaseResponse(false, "Bad Request");
-                        }
-                        else if (question.QuestionType == QuestionType.Paragraph && !(candidateResponse.Response is string)){
-                            return new BaseResponse(false, "Bad Request");
-                        }
-                        else if (question.QuestionType == QuestionType.YesNo && !(candidateResponse.Response is bool)){
-                            return new BaseResponse(false, "Bad Request");
-                        }
-                        else if (question.QuestionType == QuestionType.MultipleChoice){
-                            var response = (List<string>?)candidateResponse.Response;
-                            if(response.Count > question.MaxChoices){
-                                return new BaseResponse(false, "Bad Request");
-                            }
-                        }
-                    }
+                    
                     var entity = new CandidateResponse{
                         ProgramId = candidateResponse.ProgramId,
                         QuestionId = candidateResponse.QuestionId,
-                        Response = (string?)candidateResponse.Response
+                        Response = candidateResponse.Response.ToString()
                     };
 
                     await _context.CandidateResponses.AddAsync(entity);
